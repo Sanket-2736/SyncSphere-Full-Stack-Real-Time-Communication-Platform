@@ -259,9 +259,18 @@ export function useWebRTC(conversationId) {
   // Start audio call
   const startAudioCall = async (targetUserId, targetUsername) => {
     console.log('🔵 [AUDIO_CALL] Starting audio call with:', { targetUserId, targetUsername });
+    console.log('🔵 [AUDIO_CALL] Current user:', user);
+    console.log('🔵 [AUDIO_CALL] WebSocket connected:', isConnected);
     
-    if (!user || !user.id) {
-      console.error('❌ [AUDIO_CALL] User not authenticated');
+    if (!user) {
+      console.error('❌ [AUDIO_CALL] User object is null or undefined');
+      console.error('❌ [AUDIO_CALL] Auth context may not be initialized yet');
+      return;
+    }
+    
+    const userId = user.id || user.userId;
+    if (!userId) {
+      console.error('❌ [AUDIO_CALL] User ID is missing:', user);
       return;
     }
     
@@ -293,9 +302,18 @@ export function useWebRTC(conversationId) {
   // Start video call
   const startVideoCall = async (targetUserId, targetUsername) => {
     console.log('🔵 [VIDEO_CALL] Starting video call with:', { targetUserId, targetUsername });
+    console.log('🔵 [VIDEO_CALL] Current user:', user);
+    console.log('🔵 [VIDEO_CALL] WebSocket connected:', isConnected);
     
-    if (!user || !user.id) {
-      console.error('❌ [VIDEO_CALL] User not authenticated');
+    if (!user) {
+      console.error('❌ [VIDEO_CALL] User object is null or undefined');
+      console.error('❌ [VIDEO_CALL] Auth context may not be initialized yet');
+      return;
+    }
+    
+    const userId = user.id || user.userId;
+    if (!userId) {
+      console.error('❌ [VIDEO_CALL] User ID is missing:', user);
       return;
     }
     
@@ -458,11 +476,12 @@ export function useWebRTC(conversationId) {
   // Generate call ID
   const generateCallId = () => {
     try {
-      if (!user || !user.id) {
-        console.warn('⚠️ [CALL_ID] User not available, generating fallback ID');
+      const userId = user?.id || user?.userId;
+      if (!userId) {
+        console.warn('⚠️ [CALL_ID] User ID not available, generating fallback ID');
         return `call-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       }
-      const callId = `${user.id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const callId = `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       console.log('✅ [CALL_ID] Generated callId:', callId);
       return callId;
     } catch (error) {

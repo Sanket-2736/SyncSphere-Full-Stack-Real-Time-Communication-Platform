@@ -249,12 +249,19 @@ export function useMessages(conversationId) {
 
   const deleteMessageFn = async (messageId) => {
     try {
-      await axiosInstance.delete(`/api/chat/messages/${messageId}`);
+      console.log('🗑️ [DELETE] Attempting to delete message:', messageId);
+      const response = await axiosInstance.delete(`/api/chat/messages/${messageId}`);
+      console.log('🗑️ [DELETE] Delete response:', response.data);
+      
+      // Mark message as deleted in store
       deleteMessage(conversationId, messageId);
+      console.log('✅ [DELETE] Message marked as deleted in store');
+      
       setError(null);
     } catch (error) {
-      console.error('Failed to delete message:', error);
-      setError('Failed to delete message');
+      console.error('❌ [DELETE] Failed to delete message:', error);
+      console.error('❌ [DELETE] Error response:', error.response?.data);
+      setError('Failed to delete message: ' + (error.response?.data?.message || error.message));
     }
   };
 
