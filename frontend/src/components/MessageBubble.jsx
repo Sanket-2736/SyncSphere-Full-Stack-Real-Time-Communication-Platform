@@ -100,7 +100,7 @@ export default function MessageBubble({
   const isFailed = message.status === 'FAILED';
 
   return (
-    <div className={`flex gap-3 mb-4 group ${isOwn ? 'flex-row-reverse justify-end' : ''}`}>
+    <div className={`flex gap-3 mb-4 group animate-fade-in ${isOwn ? 'flex-row-reverse justify-end' : ''}`} style={{ animationDelay: '0ms' }}>
       {/* Avatar */}
       {!isOwn && (
         <Avatar user={message.sender} size="sm" />
@@ -110,7 +110,7 @@ export default function MessageBubble({
       <div className={`flex flex-col ${isOwn ? 'items-end' : 'items-start'} max-w-xs`}>
         {/* Sender Name (for group chats) */}
         {!isOwn && isGroupChat && (
-          <p className="text-xs text-slate-400 mb-1">
+          <p className="text-xs text-luxury-muted mb-1 font-semibold tracking-wide">
             {message.sender?.firstName} {message.sender?.lastName}
           </p>
         )}
@@ -119,14 +119,14 @@ export default function MessageBubble({
         {message.replyTo && (
           <div
             onClick={() => onScroll(message.replyTo.id)}
-            className={`mb-2 p-2 rounded border-l-2 border-indigo-500 bg-slate-700/50 cursor-pointer hover:bg-slate-700 transition-colors ${
+            className={`mb-2 p-2.5 rounded-lg border-l-4 border-luxury-accent bg-luxury-surface/60 cursor-pointer hover:bg-luxury-surface transition-all duration-300 hover:shadow-glow-sm ${
               isOwn ? 'text-right' : ''
             }`}
           >
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-luxury-muted font-medium">
               Replying to {message.replyTo.sender?.firstName}
             </p>
-            <p className="text-xs text-slate-300 truncate">
+            <p className="text-xs text-luxury-text truncate mt-0.5">
               {message.replyTo.content || '(deleted message)'}
             </p>
           </div>
@@ -134,12 +134,12 @@ export default function MessageBubble({
 
         {/* Message Bubble */}
         <div
-          className={`inline-block px-4 py-2 rounded-lg relative group/bubble ${
+          className={`inline-block px-5 py-3 rounded-3xl relative group/bubble transition-all duration-300 ${
             isFailed
-              ? 'bg-red-900/30 border border-red-700 text-red-300'
+              ? 'bg-rose-900/30 border border-rose-700/50 text-rose-300 rounded-2xl'
               : isOwn
-              ? 'bg-indigo-600 text-white'
-              : 'bg-slate-700 text-slate-100'
+              ? 'message-own'
+              : 'message-other'
           }`}
         >
           {isEditing ? (
@@ -148,12 +148,12 @@ export default function MessageBubble({
                 type="text"
                 value={editContent}
                 onChange={(e) => setEditContent(e.target.value)}
-                className="flex-1 px-2 py-1 bg-slate-600 text-white rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="flex-1 px-2 py-1 bg-luxury-surface text-luxury-text rounded text-sm focus:outline-none focus:ring-2 focus:ring-luxury-accent/50 transition-all"
                 autoFocus
               />
               <button
                 onClick={handleEdit}
-                className="px-2 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded transition-colors"
+                className="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs rounded transition-all duration-300 font-medium hover:shadow-lg active:scale-95"
               >
                 Save
               </button>
@@ -162,7 +162,7 @@ export default function MessageBubble({
                   setIsEditing(false);
                   setEditContent(message.content || '');
                 }}
-                className="px-2 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded transition-colors"
+                className="px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white text-xs rounded transition-all duration-300 font-medium hover:shadow-lg active:scale-95"
               >
                 Cancel
               </button>
@@ -170,23 +170,23 @@ export default function MessageBubble({
           ) : (
             <>
               {isDeleted ? (
-                <p className="text-sm italic text-slate-400">This message was deleted</p>
+                <p className="text-sm italic text-luxury-muted">This message was deleted</p>
               ) : (
                 <>
-                  <p className="text-sm break-words">{message.content}</p>
+                  <p className="text-sm break-words leading-relaxed">{message.content}</p>
                   {message.mediaUrl && (
                     <div className="mt-2">
                       {message.mediaType === 'IMAGE' ? (
                         <img
                           src={message.mediaUrl}
                           alt="Message media"
-                          className="max-w-xs rounded"
+                          className="max-w-xs rounded-lg shadow-luxury hover:shadow-luxury-lg transition-all duration-300"
                         />
                       ) : (
                         <a
                           href={message.mediaUrl}
                           download
-                          className="flex items-center gap-2 px-3 py-2 bg-slate-600 hover:bg-slate-500 rounded text-xs transition-colors"
+                          className="flex items-center gap-2 px-3 py-2 bg-luxury-surface hover:bg-luxury-card rounded-lg text-xs transition-all duration-300 border border-luxury-accent/20 hover:border-luxury-accent/40 hover:shadow-glow-sm"
                         >
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -197,7 +197,7 @@ export default function MessageBubble({
                     </div>
                   )}
                   {message.edited && (
-                    <p className="text-xs opacity-70 mt-1">(edited)</p>
+                    <p className="text-xs opacity-70 mt-1 font-medium">(edited)</p>
                   )}
                 </>
               )}
@@ -206,10 +206,10 @@ export default function MessageBubble({
 
           {/* Message Menu */}
           {!isEditing && (
-            <div className="absolute -right-8 top-0 opacity-0 group-hover/bubble:opacity-100 transition-opacity z-20">
+            <div className="absolute -right-8 top-0 opacity-0 group-hover/bubble:opacity-100 transition-opacity duration-300 z-20">
               <button
                 onClick={() => setShowMenu(!showMenu)}
-                className="p-1 text-slate-400 hover:text-white"
+                className="p-1 text-luxury-muted hover:text-luxury-accent transition-all duration-300 hover:scale-110"
               >
                 <svg
                   className="w-4 h-4"
@@ -221,18 +221,18 @@ export default function MessageBubble({
               </button>
 
               {showMenu && (
-                <div className="absolute right-0 mt-1 bg-slate-800 border border-slate-700 rounded shadow-lg z-50 min-w-max">
+                <div className="absolute right-0 mt-1 bg-luxury-card border border-luxury-accent/40 rounded-lg shadow-luxury-lg z-50 min-w-max animate-scale-in backdrop-blur-sm">
                   <button
                     onClick={() => {
                       setShowEmojiPicker(!showEmojiPicker);
                     }}
-                    className="block w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+                    className="block w-full text-left px-3 py-2 text-sm text-luxury-text hover:bg-luxury-surface hover:text-luxury-accent transition-all duration-300"
                   >
                     React
                   </button>
                   <button
                     onClick={handleReply}
-                    className="block w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+                    className="block w-full text-left px-3 py-2 text-sm text-luxury-text hover:bg-luxury-surface hover:text-luxury-accent transition-all duration-300"
                   >
                     Reply
                   </button>
@@ -243,13 +243,13 @@ export default function MessageBubble({
                           setIsEditing(true);
                           setShowMenu(false);
                         }}
-                        className="block w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+                        className="block w-full text-left px-3 py-2 text-sm text-luxury-text hover:bg-luxury-surface hover:text-luxury-accent transition-all duration-300"
                       >
                         Edit
                       </button>
                       <button
                         onClick={handleDelete}
-                        className="block w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-slate-700 hover:text-red-300 transition-colors"
+                        className="block w-full text-left px-3 py-2 text-sm text-rose-400 hover:bg-luxury-surface hover:text-rose-300 transition-all duration-300"
                       >
                         Delete
                       </button>
@@ -258,7 +258,7 @@ export default function MessageBubble({
                   {!isDeleted && (
                     <button
                       onClick={handlePin}
-                      className="block w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+                      className="block w-full text-left px-3 py-2 text-sm text-luxury-text hover:bg-luxury-surface hover:text-luxury-accent transition-all duration-300"
                     >
                       Pin
                     </button>
@@ -267,15 +267,14 @@ export default function MessageBubble({
               )}
 
               {showEmojiPicker && (
-                <div className="absolute right-0 top-0 bg-slate-800 border border-slate-700 rounded shadow-lg z-50 p-2 flex gap-1 flex-wrap w-64">
+                <div className="absolute right-0 top-0 bg-luxury-card border border-luxury-accent/40 rounded-lg shadow-luxury-lg z-50 p-2 flex gap-1 flex-wrap w-64 animate-scale-in backdrop-blur-sm">
                   {commonEmojis.map((emoji) => (
                     <button
                       key={emoji}
                       onClick={() => {
                         onReact(message.id, emoji);
-                        // Don't close emoji picker - keep it open for more reactions
                       }}
-                      className="text-lg hover:scale-125 transition-transform"
+                      className="text-lg hover:scale-125 transition-all duration-300 hover:bg-luxury-surface rounded-lg p-1"
                     >
                       {emoji}
                     </button>
@@ -283,7 +282,7 @@ export default function MessageBubble({
                   {/* Close button for emoji picker */}
                   <button
                     onClick={() => setShowEmojiPicker(false)}
-                    className="text-lg hover:scale-125 transition-transform ml-2 pl-2 border-l border-slate-600"
+                    className="text-lg hover:scale-125 transition-all duration-300 ml-2 pl-2 border-l border-luxury-accent/20"
                     title="Close"
                   >
                     ✕
@@ -295,8 +294,8 @@ export default function MessageBubble({
         </div>
 
         {/* Timestamp & Status */}
-        <div className={`flex items-center gap-1 mt-1 ${isOwn ? 'justify-end' : ''}`}>
-          <p className="text-xs text-slate-500">
+        <div className={`flex items-center gap-1 mt-1.5 ${isOwn ? 'justify-end' : ''}`}>
+          <p className="text-xs text-luxury-muted/70 font-medium">
             {formatTime(message.sentAt)}
           </p>
           {isOwn && <MessageStatus status={message.status || 'SENT'} />}
@@ -306,7 +305,7 @@ export default function MessageBubble({
         {isFailed && isOwn && (
           <button
             onClick={() => onRetry && onRetry(message.tempId)}
-            className="mt-2 text-xs px-2 py-1 bg-red-600 hover:bg-red-700 text-white rounded transition-colors"
+            className="mt-2 text-xs px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition-all duration-300 font-medium hover:shadow-lg active:scale-95"
           >
             Retry
           </button>
@@ -319,7 +318,7 @@ export default function MessageBubble({
               <button
                 key={reaction.emoji}
                 onClick={() => onReact(message.id, reaction.emoji)}
-                className="px-2 py-1 bg-slate-600 hover:bg-slate-500 text-xs rounded transition-colors"
+                className="px-2 py-1 bg-luxury-surface hover:bg-luxury-card text-xs rounded-lg transition-all duration-300 border border-luxury-accent/25 hover:border-luxury-accent/50 hover:shadow-glow-sm font-medium"
               >
                 {reaction.emoji} {reaction.count}
               </button>

@@ -96,30 +96,30 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
   };
 
   return (
-    <div className="w-80 bg-gradient-to-b from-slate-800 to-slate-900 border-r border-slate-700/50 flex flex-col h-screen shadow-2xl">
+    <div className="w-80 bg-luxury-bg border-r border-luxury-accent/15 flex flex-col h-screen shadow-luxury-xl">
       {/* Header */}
-      <div className="p-4 border-b border-slate-700/50 bg-gradient-to-r from-slate-800 to-slate-700">
+      <div className="sidebar-header p-4 space-y-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="relative">
               <Avatar user={user} status={status} size="md" />
-              <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-slate-800 ${
-                status === 'ONLINE' ? 'bg-green-500' :
-                status === 'AWAY' ? 'bg-yellow-400' :
-                status === 'DO_NOT_DISTURB' ? 'bg-red-500' :
-                'bg-gray-400'
+              <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-luxury-bg ${
+                status === 'ONLINE' ? 'status-online' :
+                status === 'AWAY' ? 'status-away' :
+                status === 'DO_NOT_DISTURB' ? 'status-dnd' :
+                'status-offline'
               }`}></div>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-white truncate">
+              <p className="text-sm font-bold text-luxury-text truncate">
                 {user?.firstName} {user?.lastName}
               </p>
-              <p className="text-xs text-slate-400">@{user?.username}</p>
+              <p className="text-xs text-luxury-muted">@{user?.username}</p>
             </div>
           </div>
           <button
             onClick={() => navigate('/settings')}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-700/50 rounded-lg transition-all"
+            className="p-2 text-luxury-muted hover:text-luxury-accent hover:bg-luxury-surface rounded-lg transition-all duration-300 glow-accent hover:scale-110"
             title="Settings"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -130,11 +130,11 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
         </div>
 
         {/* Status Dropdown */}
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-2">
           <select
             value={status}
             onChange={(e) => handleStatusChange(e.target.value)}
-            className="flex-1 px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+            className="flex-1 px-3 py-2.5 bg-luxury-card border border-luxury-accent/25 rounded-lg text-sm text-luxury-text focus:ring-2 focus:ring-luxury-accent/50 transition-all duration-300 hover:border-luxury-accent/50 font-medium"
           >
             <option value="ONLINE">🟢 Online</option>
             <option value="AWAY">🟡 Away</option>
@@ -143,7 +143,7 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
           </select>
           <button
             onClick={logout}
-            className="px-3 py-2 bg-red-600/80 hover:bg-red-700 text-white text-sm rounded-lg transition-all font-medium"
+            className="px-3 py-2.5 bg-rose-600/80 hover:bg-rose-700 text-white text-sm rounded-lg transition-all duration-300 font-medium shadow-lg hover:shadow-rose-500/40 active:scale-95 hover:scale-105"
             title="Logout"
           >
             ↪
@@ -154,7 +154,7 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
         <div className="flex gap-2">
           <button
             onClick={() => setShowNewDM(true)}
-            className="flex-1 px-3 py-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white text-sm rounded-lg transition-all flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-indigo-500/50"
+            className="flex-1 px-3 py-2.5 bg-gradient-to-r from-luxury-accent to-luxury-accent-light hover:from-luxury-accent-light hover:to-luxury-accent text-black text-sm rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-semibold shadow-glow hover:shadow-glow-lg active:scale-95 hover:scale-105"
             title="New Direct Message"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -164,7 +164,7 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
           </button>
           <button
             onClick={() => setShowNewGroup(true)}
-            className="flex-1 px-3 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white text-sm rounded-lg transition-all flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-purple-500/50"
+            className="flex-1 px-3 py-2.5 bg-luxury-surface border border-luxury-accent/40 hover:border-luxury-accent/60 text-luxury-accent text-sm rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-semibold hover:shadow-glow active:scale-95 hover:scale-105"
             title="New Group"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -176,16 +176,16 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
       </div>
 
       {/* Search */}
-      <div className="p-4 border-b border-slate-700/50">
+      <div className="p-4 border-b border-luxury-accent/10">
         <div className="relative">
           <input
             type="text"
             placeholder="Search conversations..."
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
-            className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+            className="w-full px-4 py-2.5 bg-luxury-card border border-luxury-accent/20 rounded-lg text-sm text-luxury-text placeholder-luxury-muted/60 focus:ring-2 focus:ring-luxury-accent/50 transition-all hover:border-luxury-accent/40"
           />
-          <svg className="absolute right-3 top-2.5 w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="absolute right-3 top-3 w-4 h-4 text-luxury-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -195,28 +195,28 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
       <div className="flex-1 overflow-y-auto">
         {searchQuery && searchResults.length === 0 ? (
           <div className="p-8 text-center">
-            <svg className="w-12 h-12 mx-auto mb-3 opacity-30 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-12 h-12 mx-auto mb-3 opacity-30 text-luxury-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <p className="text-slate-400 text-sm font-medium">No users found</p>
-            <p className="text-slate-500 text-xs mt-1">Try a different search term</p>
+            <p className="text-luxury-muted text-sm font-medium">No users found</p>
+            <p className="text-luxury-muted/60 text-xs mt-1">Try a different search term</p>
           </div>
         ) : searchQuery && searchResults.length > 0 ? (
           <div className="p-2">
-            <p className="text-xs text-slate-400 px-2 py-1 font-semibold">Search Results</p>
+            <p className="text-xs text-luxury-muted px-2 py-1 font-semibold uppercase tracking-wide">Search Results</p>
             {searchResults.map((result) => (
               <div
                 key={result.id}
                 onClick={() => handleSelectSearchResult(result)}
-                className="p-3 hover:bg-slate-700/50 cursor-pointer rounded-lg transition-all m-1"
+                className="p-3 hover:bg-luxury-surface/50 cursor-pointer rounded-lg transition-all m-1 border border-transparent hover:border-luxury-accent/20"
               >
                 <div className="flex items-center gap-3">
                   <Avatar user={result} size="sm" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">
+                    <p className="text-sm font-medium text-luxury-text truncate">
                       {result.firstName} {result.lastName}
                     </p>
-                    <p className="text-xs text-slate-400">@{result.username}</p>
+                    <p className="text-xs text-luxury-muted">@{result.username}</p>
                   </div>
                 </div>
               </div>
@@ -226,39 +226,39 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
           <div className="p-2">
             {conversations.length === 0 ? (
               <div className="p-8 text-center">
-                <svg className="w-12 h-12 mx-auto mb-3 opacity-30 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-12 h-12 mx-auto mb-3 opacity-30 text-luxury-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
-                <p className="text-slate-400 text-sm font-medium mb-2">No conversations yet</p>
-                <p className="text-slate-500 text-xs">Start a new conversation using the buttons above</p>
+                <p className="text-luxury-muted text-sm font-medium mb-2">No conversations yet</p>
+                <p className="text-luxury-muted/60 text-xs">Start a new conversation using the buttons above</p>
               </div>
             ) : (
               conversations.map((conversation) => (
                 <div
                   key={conversation.id}
-                  className={`p-3 rounded-lg cursor-pointer transition-all m-1 group relative ${
+                  className={`conversation-item p-3 rounded-lg cursor-pointer transition-all m-1 group relative border ${
                     activeConversationId === conversation.id
-                      ? 'bg-gradient-to-r from-indigo-600/80 to-indigo-700/80 shadow-lg shadow-indigo-500/30'
-                      : 'hover:bg-slate-700/50'
+                      ? 'bg-gradient-to-r from-luxury-accent/20 to-luxury-accent-light/10 border-luxury-accent/40 shadow-glow'
+                      : 'border-transparent hover:bg-luxury-surface/30 hover:border-luxury-accent/20'
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     <Avatar user={conversation} size="sm" />
                     <div className="flex-1 min-w-0" onClick={() => onSelectConversation(conversation.id)}>
                       <div className="flex items-center justify-between">
-                        <p className="text-sm font-semibold text-white truncate">
+                        <p className="text-sm font-semibold text-luxury-text truncate">
                           {conversation.name}
                         </p>
                         {conversation.unreadCount > 0 && (
-                          <span className="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 ml-2 font-bold shadow-lg">
+                          <span className="bg-gradient-to-r from-luxury-accent to-luxury-accent-light text-black text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 ml-2 font-bold shadow-glow text-center">
                             {conversation.unreadCount > 9 ? '9+' : conversation.unreadCount}
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-slate-300 truncate mt-1">
+                      <p className="text-xs text-luxury-muted truncate mt-1">
                         {conversation.lastMessage?.content || 'No messages yet'}
                       </p>
-                      <p className="text-xs text-slate-500 mt-1">
+                      <p className="text-xs text-luxury-muted/50 mt-1">
                         {conversation.lastMessageAt ? new Date(conversation.lastMessageAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
                       </p>
                     </div>
@@ -269,7 +269,7 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
                         e.stopPropagation();
                         setDeleteConfirm(conversation.id);
                       }}
-                      className="p-1 text-slate-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500/10 rounded"
+                      className="p-1.5 text-luxury-muted hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-all hover:bg-rose-500/10 rounded-lg"
                       title="Delete conversation"
                     >
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -286,22 +286,22 @@ export default function Sidebar({ conversations, activeConversationId, onSelectC
 
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-slate-800 rounded-xl shadow-2xl p-6 max-w-sm mx-4 border border-slate-700">
-            <h3 className="text-lg font-bold text-white mb-2">Delete Conversation?</h3>
-            <p className="text-slate-300 text-sm mb-6">This action cannot be undone. All messages will be permanently deleted.</p>
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-luxury-card rounded-2xl shadow-luxury-lg p-6 max-w-sm mx-4 border border-luxury-accent/30 animate-scale-in">
+            <h3 className="text-lg font-serif font-bold text-luxury-text mb-2">Delete Conversation?</h3>
+            <p className="text-luxury-muted text-sm mb-6">This action cannot be undone. All messages will be permanently deleted.</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
                 disabled={deleting}
-                className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-all disabled:opacity-50"
+                className="flex-1 px-4 py-2.5 bg-luxury-surface hover:bg-luxury-card text-luxury-text rounded-lg transition-all disabled:opacity-50 border border-luxury-accent/20 font-medium"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDeleteConversation(deleteConfirm)}
                 disabled={deleting}
-                className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all disabled:opacity-50 font-medium"
+                className="flex-1 px-4 py-2.5 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white rounded-lg transition-all disabled:opacity-50 font-medium shadow-lg hover:shadow-rose-500/30 active:scale-95"
               >
                 {deleting ? 'Deleting...' : 'Delete'}
               </button>

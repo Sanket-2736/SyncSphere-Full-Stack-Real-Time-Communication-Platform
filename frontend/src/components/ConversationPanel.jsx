@@ -111,9 +111,9 @@ export default function ConversationPanel({
 
   if (!conversationId) {
     return (
-      <div className="flex-1 bg-slate-900 flex flex-col items-center justify-center">
+      <div className="flex-1 bg-luxury-bg flex flex-col items-center justify-center">
         <svg
-          className="w-16 h-16 mb-4 opacity-50 text-slate-400"
+          className="w-16 h-16 mb-4 opacity-30 text-luxury-muted"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -125,13 +125,13 @@ export default function ConversationPanel({
             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
           />
         </svg>
-        <p className="text-slate-400">Select a conversation to start messaging</p>
+        <p className="text-luxury-muted">Select a conversation to start messaging</p>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 bg-slate-900 flex flex-col">
+    <div className="flex-1 bg-luxury-bg flex flex-col">
       {/* Pinned Messages Banner */}
       <PinnedMessagesBanner
         pinnedMessages={pinnedMessages}
@@ -139,11 +139,11 @@ export default function ConversationPanel({
       />
 
       {/* Header */}
-      <div className="h-16 bg-slate-800 border-b border-slate-700 flex items-center justify-between px-6">
-        <h2 className="text-lg font-semibold text-white">
+      <div className="h-16 bg-luxury-surface border-b border-luxury-accent/10 flex items-center justify-between px-6 shadow-luxury">
+        <h2 className="text-lg font-serif font-semibold text-luxury-text">
           {conversationName || `Conversation ${conversationId}`}
         </h2>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           {/* Audio Call Button (Direct conversations only) */}
           {!isGroupChat && targetUserId ? (
             <button
@@ -151,7 +151,7 @@ export default function ConversationPanel({
                 console.log('🔵 [UI] Audio call button clicked');
                 startAudioCall(targetUserId, conversationName);
               }}
-              className="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded transition-colors"
+              className="p-2.5 text-luxury-muted hover:text-luxury-accent hover:bg-luxury-card rounded-lg transition-all hover:shadow-glow-sm"
               title="Audio call"
             >
               <svg
@@ -171,7 +171,7 @@ export default function ConversationPanel({
                 console.log('🔵 [UI] Video call button clicked');
                 startVideoCall(targetUserId, conversationName);
               }}
-              className="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded transition-colors"
+              className="p-2.5 text-luxury-muted hover:text-luxury-accent hover:bg-luxury-card rounded-lg transition-all hover:shadow-glow-sm"
               title="Video call"
             >
               <svg
@@ -185,7 +185,7 @@ export default function ConversationPanel({
           ) : null}
 
           {/* Search Button */}
-          <button className="p-2 text-slate-400 hover:text-white transition-colors">
+          <button className="p-2.5 text-luxury-muted hover:text-luxury-accent transition-all hover:bg-luxury-card rounded-lg hover:shadow-glow-sm">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -202,7 +202,7 @@ export default function ConversationPanel({
           </button>
 
           {/* Info Button */}
-          <button className="p-2 text-slate-400 hover:text-white transition-colors">
+          <button className="p-2.5 text-luxury-muted hover:text-luxury-accent transition-all hover:bg-luxury-card rounded-lg hover:shadow-glow-sm">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -224,27 +224,27 @@ export default function ConversationPanel({
       <div
         ref={messagesContainerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto p-6"
+        className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-luxury-bg/50 to-luxury-bg"
       >
         {loading && messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mx-auto mb-2"></div>
-              <p className="text-slate-400 text-sm">Loading messages...</p>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-luxury-accent mx-auto mb-2"></div>
+              <p className="text-luxury-muted text-sm">Loading messages...</p>
             </div>
           </div>
         ) : messages.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-slate-400">
-            <p>No messages yet. Start the conversation!</p>
+          <div className="flex items-center justify-center h-full text-luxury-muted">
+            <p className="text-center">No messages yet. Start the conversation!</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <>
             {/* Load More Button */}
             {hasMore && (
               <button
                 onClick={loadOlderMessages}
                 disabled={loading}
-                className="w-full py-2 text-sm text-slate-400 hover:text-white disabled:opacity-50 transition-colors"
+                className="w-full py-2 text-sm text-luxury-muted hover:text-luxury-accent disabled:opacity-50 transition-colors font-medium"
               >
                 {loading ? 'Loading...' : 'Load older messages'}
               </button>
@@ -270,20 +270,20 @@ export default function ConversationPanel({
 
             {/* Typing Indicator */}
             {typingUsers.length > 0 && (
-              <div className="flex gap-3 mb-4">
-                <div className="flex items-center gap-2 px-4 py-2 bg-slate-700 rounded-lg">
+              <div className="flex gap-3 mb-4 animate-fade-in">
+                <div className="flex items-center gap-2 px-4 py-2 bg-luxury-card rounded-lg border border-luxury-accent/20 shadow-glow-sm">
                   <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-luxury-accent rounded-full animate-bounce"></div>
                     <div
-                      className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                      className="w-2 h-2 bg-luxury-accent rounded-full animate-bounce"
                       style={{ animationDelay: '0.1s' }}
                     ></div>
                     <div
-                      className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"
+                      className="w-2 h-2 bg-luxury-accent rounded-full animate-bounce"
                       style={{ animationDelay: '0.2s' }}
                     ></div>
                   </div>
-                  <span className="text-xs text-slate-400 ml-2">
+                  <span className="text-xs text-luxury-muted ml-2 font-medium">
                     {typingUsers.length === 1
                       ? `${typingUsers[0]?.firstName || 'Someone'} is typing...`
                       : `${typingUsers.length} people are typing...`}
@@ -293,11 +293,11 @@ export default function ConversationPanel({
             )}
 
             <div ref={messagesEndRef} />
-          </div>
+          </>
         )}
 
         {error && (
-          <div className="mt-4 p-3 bg-red-900/30 border border-red-700 rounded text-red-400 text-sm">
+          <div className="mt-4 p-3 bg-rose-900/30 border border-rose-700/50 rounded-lg text-rose-400 text-sm">
             {error}
           </div>
         )}

@@ -99,21 +99,21 @@ export default function MessageInput({
   };
 
   return (
-    <div className="bg-slate-800 border-t border-slate-700 p-4 space-y-3">
+    <div className="message-input-container p-4 space-y-3">
       {/* Reply Preview */}
       {replyingTo && (
-        <div className="flex items-center justify-between p-3 bg-slate-700 rounded border-l-2 border-indigo-500">
+        <div className="flex items-center justify-between p-3 bg-luxury-card rounded-xl border-l-4 border-luxury-accent shadow-glow-sm hover:shadow-glow transition-all duration-300 animate-slide-up">
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-luxury-muted font-semibold uppercase tracking-wider">
               Replying to {replyingTo.sender?.firstName}
             </p>
-            <p className="text-sm text-slate-300 truncate">
+            <p className="text-sm text-luxury-text truncate mt-1">
               {replyingTo.content || '(deleted message)'}
             </p>
           </div>
           <button
             onClick={() => clearReplyingTo(conversationId)}
-            className="ml-2 p-1 text-slate-400 hover:text-white transition-colors"
+            className="ml-2 p-1.5 text-luxury-muted hover:text-luxury-accent hover:bg-luxury-surface/80 rounded-lg transition-all duration-300 hover:scale-110"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -131,18 +131,18 @@ export default function MessageInput({
             onKeyDown={handleKeyDown}
             placeholder="Type a message... (Shift+Enter for new line)"
             disabled={disabled || uploading}
-            className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none max-h-24 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="message-textarea flex-1"
             rows="1"
           />
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {/* File Upload */}
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={disabled || uploading}
-            className="p-2 text-slate-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="p-2.5 text-luxury-muted hover:text-luxury-accent hover:bg-luxury-card/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 rounded-lg hover:shadow-glow-sm hover:scale-110"
             title="Attach file"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -155,7 +155,7 @@ export default function MessageInput({
             <button
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
               disabled={disabled}
-              className="p-2 text-slate-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="p-2.5 text-luxury-muted hover:text-luxury-accent hover:bg-luxury-card/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 rounded-lg hover:shadow-glow-sm hover:scale-110"
               title="Emoji"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -164,12 +164,12 @@ export default function MessageInput({
             </button>
 
             {showEmojiPicker && (
-              <div className="absolute bottom-full right-0 mb-2 bg-slate-800 border border-slate-700 rounded shadow-lg z-10 p-3 grid grid-cols-6 gap-2 w-64">
+              <div className="absolute bottom-full right-0 mb-2 bg-luxury-card border border-luxury-accent/40 rounded-xl shadow-luxury-lg z-10 p-3 grid grid-cols-6 gap-2 w-64 animate-scale-in backdrop-blur-sm">
                 {commonEmojis.map((emoji) => (
                   <button
                     key={emoji}
                     onClick={() => handleEmojiSelect(emoji)}
-                    className="text-xl hover:scale-125 transition-transform"
+                    className="text-xl hover:scale-125 transition-all duration-300 hover:bg-luxury-surface rounded-lg p-1 hover:shadow-glow-sm active:scale-100"
                   >
                     {emoji}
                   </button>
@@ -182,7 +182,7 @@ export default function MessageInput({
           <button
             onClick={handleSendMessage}
             disabled={!messageInput.trim() || disabled || uploading}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors shadow-lg"
+            className="px-5 py-2.5 bg-gradient-to-r from-luxury-accent to-luxury-accent-light hover:from-luxury-accent-light hover:to-luxury-accent disabled:bg-luxury-surface disabled:cursor-not-allowed text-black font-semibold rounded-lg transition-all duration-300 shadow-glow hover:shadow-glow-lg disabled:shadow-none active:scale-95 hover:scale-105 disabled:hover:scale-100 disabled:opacity-50"
           >
             {uploading ? (
               <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -259,6 +259,12 @@ export function useWebRTC(conversationId) {
   // Start audio call
   const startAudioCall = async (targetUserId, targetUsername) => {
     console.log('🔵 [AUDIO_CALL] Starting audio call with:', { targetUserId, targetUsername });
+    
+    if (!user || !user.id) {
+      console.error('❌ [AUDIO_CALL] User not authenticated');
+      return;
+    }
+    
     if (!isConnected) {
       console.error('❌ [AUDIO_CALL] WebSocket not connected');
       return;
@@ -287,6 +293,12 @@ export function useWebRTC(conversationId) {
   // Start video call
   const startVideoCall = async (targetUserId, targetUsername) => {
     console.log('🔵 [VIDEO_CALL] Starting video call with:', { targetUserId, targetUsername });
+    
+    if (!user || !user.id) {
+      console.error('❌ [VIDEO_CALL] User not authenticated');
+      return;
+    }
+    
     if (!isConnected) {
       console.error('❌ [VIDEO_CALL] WebSocket not connected');
       return;
@@ -445,11 +457,18 @@ export function useWebRTC(conversationId) {
 
   // Generate call ID
   const generateCallId = () => {
-    if (!user || !user.id) {
-      console.error('❌ [CALL_ID] User not available:', user);
+    try {
+      if (!user || !user.id) {
+        console.warn('⚠️ [CALL_ID] User not available, generating fallback ID');
+        return `call-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      }
+      const callId = `${user.id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      console.log('✅ [CALL_ID] Generated callId:', callId);
+      return callId;
+    } catch (error) {
+      console.error('❌ [CALL_ID] Error generating call ID:', error);
       return `call-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     }
-    return `${user.id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   };
 
   // Cleanup on unmount
