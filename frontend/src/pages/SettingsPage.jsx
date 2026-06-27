@@ -29,7 +29,6 @@ export default function SettingsPage() {
       setAvatarUrl(data.avatarUrl || '');
     } catch (error) {
       console.error('Failed to load profile:', error);
-      // Fallback to current user from context
       if (user) {
         setFirstName(user.firstName || '');
         setLastName(user.lastName || '');
@@ -51,7 +50,6 @@ export default function SettingsPage() {
     setLoading(true);
     setError(null);
     setSuccess(null);
-
     try {
       await axiosInstance.put('/api/users/profile', {
         firstName,
@@ -78,46 +76,45 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="flex h-screen bg-slate-900">
+    <div className="flex h-screen bg-apple-bg">
       {/* Sidebar */}
-      <div className="w-64 bg-slate-800 border-r border-slate-700 p-6">
+      <div className="w-64 bg-white border-r border-apple-border p-6">
         <button
           onClick={() => navigate('/chat')}
-          className="mb-8 flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
+          className="mb-8 flex items-center gap-2 text-apple-secondary hover:text-apple-text transition-colors"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
           </svg>
-          Back to Chat
+          Back
         </button>
 
-        <nav className="space-y-2">
+        <nav className="space-y-1">
           <button
             onClick={() => setActiveTab('profile')}
-            className={`w-full text-left px-4 py-2 rounded transition-colors ${
+            className={`w-full text-left px-4 py-2.5 rounded-md transition-colors font-medium ${
               activeTab === 'profile'
-                ? 'bg-indigo-600 text-white'
-                : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                ? 'bg-apple-accent/10 text-apple-accent'
+                : 'text-apple-secondary hover:text-apple-text hover:bg-apple-bg'
             }`}
           >
             Profile
           </button>
           <button
             onClick={() => setActiveTab('blocked')}
-            className={`w-full text-left px-4 py-2 rounded transition-colors ${
+            className={`w-full text-left px-4 py-2.5 rounded-md transition-colors font-medium ${
               activeTab === 'blocked'
-                ? 'bg-indigo-600 text-white'
-                : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                ? 'bg-apple-accent/10 text-apple-accent'
+                : 'text-apple-secondary hover:text-apple-text hover:bg-apple-bg'
             }`}
           >
             Blocked Users
           </button>
         </nav>
 
-        {/* Logout Button */}
         <button
           onClick={logout}
-          className="w-full mt-8 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+          className="w-full mt-8 btn btn-danger"
         >
           Logout
         </button>
@@ -128,17 +125,17 @@ export default function SettingsPage() {
         <div className="max-w-2xl mx-auto p-8">
           {/* Profile Tab */}
           {activeTab === 'profile' && (
-            <div>
-              <h1 className="text-3xl font-bold text-white mb-8">Profile Settings</h1>
+            <div className="slide-up">
+              <h1 className="text-h2 text-apple-text mb-8">Profile Settings</h1>
 
               {error && (
-                <div className="p-4 bg-red-900/30 border border-red-700 rounded text-red-400 mb-6">
+                <div className="p-4 bg-apple-danger/10 border border-apple-danger/30 rounded-md text-apple-danger mb-6">
                   {error}
                 </div>
               )}
 
               {success && (
-                <div className="p-4 bg-green-900/30 border border-green-700 rounded text-green-400 mb-6">
+                <div className="p-4 bg-apple-success/10 border border-apple-success/30 rounded-md text-apple-success mb-6">
                   {success}
                 </div>
               )}
@@ -146,59 +143,47 @@ export default function SettingsPage() {
               {/* Avatar Preview */}
               <div className="mb-8 text-center">
                 <Avatar user={{ ...user, avatarUrl }} size="lg" />
-                <p className="text-slate-400 text-sm mt-2">{user?.username}</p>
+                <p className="text-apple-secondary text-sm mt-2">@{user?.username}</p>
               </div>
 
               {/* Form */}
-              <div className="space-y-6">
-                {/* First Name */}
+              <div className="card p-6 space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    First Name
-                  </label>
+                  <label className="block text-sm font-medium text-apple-text mb-2">First Name</label>
                   <input
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full input"
                   />
                 </div>
 
-                {/* Last Name */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Last Name
-                  </label>
+                  <label className="block text-sm font-medium text-apple-text mb-2">Last Name</label>
                   <input
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full input"
                   />
                 </div>
 
-                {/* Avatar URL */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Avatar URL
-                  </label>
+                  <label className="block text-sm font-medium text-apple-text mb-2">Avatar URL</label>
                   <input
                     type="text"
                     value={avatarUrl}
                     onChange={(e) => setAvatarUrl(e.target.value)}
                     placeholder="https://example.com/avatar.jpg"
-                    className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full input"
                   />
-                  <p className="text-xs text-slate-500 mt-1">
-                    Leave empty to use initials
-                  </p>
+                  <p className="text-xs text-apple-secondary/70 mt-1">Leave empty to use initials</p>
                 </div>
 
-                {/* Save Button */}
                 <button
                   onClick={handleUpdateProfile}
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white rounded-lg transition-colors font-medium"
+                  className="w-full btn btn-primary py-3 font-semibold"
                 >
                   {loading ? 'Saving...' : 'Save Changes'}
                 </button>
@@ -208,34 +193,29 @@ export default function SettingsPage() {
 
           {/* Blocked Users Tab */}
           {activeTab === 'blocked' && (
-            <div>
-              <h1 className="text-3xl font-bold text-white mb-8">Blocked Users</h1>
+            <div className="slide-up">
+              <h1 className="text-h2 text-apple-text mb-8">Blocked Users</h1>
 
               {blockedUsers.length === 0 ? (
                 <div className="text-center py-12">
-                  <p className="text-slate-400">No blocked users</p>
+                  <p className="text-apple-secondary">No blocked users</p>
                 </div>
               ) : (
                 <div className="space-y-3">
                   {blockedUsers.map((blockedUser) => (
-                    <div
-                      key={blockedUser.id}
-                      className="flex items-center justify-between p-4 bg-slate-800 border border-slate-700 rounded-lg"
-                    >
+                    <div key={blockedUser.id} className="card p-4 flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <Avatar user={blockedUser} size="sm" />
                         <div>
-                          <p className="font-medium text-white">
+                          <p className="font-medium text-apple-text">
                             {blockedUser.firstName} {blockedUser.lastName}
                           </p>
-                          <p className="text-sm text-slate-400">
-                            @{blockedUser.username}
-                          </p>
+                          <p className="text-sm text-apple-secondary">@{blockedUser.username}</p>
                         </div>
                       </div>
                       <button
                         onClick={() => handleUnblockUser(blockedUser.id)}
-                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg transition-colors"
+                        className="btn btn-secondary text-sm"
                       >
                         Unblock
                       </button>

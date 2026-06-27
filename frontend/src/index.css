@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,85 +13,58 @@ html {
 }
 
 body {
-  @apply bg-luxury-bg text-luxury-text font-sans;
-  letter-spacing: 0.3px;
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
-  background-attachment: fixed;
+  @apply bg-apple-bg text-apple-text font-sans;
+  letter-spacing: -0.3px;
 }
 
 /* ============================================
    TYPOGRAPHY
    ============================================ */
-h1, h2, h3, h4, h5, h6 {
-  @apply font-serif font-bold tracking-tight;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #e8e8e8 0%, #d4af37 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 h1 {
-  @apply text-4xl;
-  font-weight: 800;
-  letter-spacing: -1px;
+  @apply text-h1;
 }
 
 h2 {
-  @apply text-2xl;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  @apply text-h2;
 }
 
 h3 {
-  @apply text-xl;
-  font-weight: 700;
+  @apply text-h3;
 }
 
 h4 {
-  @apply text-lg;
-  font-weight: 600;
+  @apply text-h4;
+}
+
+h5 {
+  @apply text-h5;
 }
 
 p {
-  @apply leading-relaxed;
-  color: #e8e8e8;
+  @apply text-body text-apple-secondary;
 }
 
 code, pre {
-  @apply font-mono text-sm;
-  background: rgba(26, 26, 26, 0.8);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  border-radius: 0.375rem;
-  padding: 0.25rem 0.5rem;
+  @apply font-mono text-sm bg-apple-border/30 rounded-md px-2 py-1;
 }
 
 /* ============================================
-   SCROLLBAR STYLING - Luxury Gold
+   SCROLLBAR STYLING
    ============================================ */
 ::-webkit-scrollbar {
-  @apply w-2.5 h-2.5;
+  @apply w-2;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-luxury-surface/10;
-  border-radius: 10px;
+  @apply bg-apple-bg/50;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gradient-to-b from-luxury-accent/70 to-luxury-accent-dark/70 rounded-full hover:from-luxury-accent/90 hover:to-luxury-accent-dark/90 transition-all duration-300 shadow-glow-sm;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
+  @apply bg-apple-border hover:bg-apple-secondary/50 rounded-full transition-colors duration-200;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply shadow-glow;
-}
-
-/* Firefox scrollbar */
 * {
-  scrollbar-color: rgba(212, 175, 55, 0.7) rgba(26, 26, 26, 0.15);
+  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(245, 245, 247, 0.5);
   scrollbar-width: thin;
 }
 
@@ -102,7 +75,7 @@ input:focus,
 textarea:focus,
 select:focus,
 button:focus {
-  @apply outline-none ring-2 ring-luxury-accent/50 ring-offset-2 ring-offset-luxury-bg;
+  @apply outline-none ring-2 ring-apple-accent/30 ring-offset-1 ring-offset-apple-bg;
 }
 
 /* ============================================
@@ -119,56 +92,6 @@ select {
 /* ============================================
    ANIMATIONS
    ============================================ */
-
-/* Message entrance animation - smooth and elegant */
-@keyframes messageSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.92);
-    filter: blur(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
-
-/* Subtle pulse for new messages */
-@keyframes messagePulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.08), 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(212, 175, 55, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
-  }
-}
-
-/* Glow fade for interactive elements */
-@keyframes glowFade {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-/* Smooth scale on hover */
-@keyframes scaleIn {
-  from {
-    transform: scale(0.92);
-    opacity: 0;
-    filter: blur(2px);
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-    filter: blur(0);
-  }
-}
-
-/* Fade in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -178,339 +101,205 @@ select {
   }
 }
 
-/* Subtle bounce for typing indicator */
-@keyframes typingBounce {
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes typing {
   0%, 60%, 100% {
     transform: translateY(0);
   }
   30% {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
   }
 }
 
-/* Smooth slide up */
-@keyframes slideUp {
+@keyframes slideInFromRight {
   from {
+    transform: translateX(100%);
     opacity: 0;
-    transform: translateY(12px);
   }
   to {
+    transform: translateX(0);
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-/* Gentle float animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
   }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-/* Shimmer effect for loading */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
-.message-bubble {
-  animation: messageSlideIn 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.message-bubble.new {
-  animation: messageSlideIn 0.5s cubic-bezier(0.23, 1, 0.320, 1), messagePulse 2.5s ease-in-out;
+.scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ============================================
-   GLOW EFFECTS
-   ============================================ */
-.glow-accent {
-  @apply shadow-glow transition-all duration-300;
-}
-
-.glow-accent:hover {
-  @apply shadow-glow-lg;
-}
-
-.glow-accent:active {
-  @apply shadow-glow;
+.slide-up {
+  animation: slideUp 0.3s ease-out;
 }
 
 /* ============================================
    CARD STYLING
    ============================================ */
-.luxury-card {
-  @apply bg-luxury-card border border-luxury-border/40 rounded-xl backdrop-blur-xs;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+.card {
+  @apply bg-white rounded-lg border border-apple-border shadow-sm hover:shadow-md transition-all duration-200;
 }
 
-.luxury-card-hover {
-  @apply luxury-card hover:border-luxury-accent/50 hover:shadow-luxury hover:bg-luxury-card/90 transition-all duration-300;
+.card-elevated {
+  @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200;
 }
 
-.luxury-card-hover:hover {
-  transform: translateY(-2px);
-}
-
-/* ============================================
-   INPUT STYLING
-   ============================================ */
-.luxury-input {
-  @apply bg-luxury-surface border border-luxury-border/50 text-luxury-text placeholder-luxury-muted rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-luxury-accent/50 focus:border-luxury-accent/40 hover:border-luxury-border/70 transition-all duration-300;
-  backdrop-filter: blur(4px);
-}
-
-.luxury-input::placeholder {
-  @apply text-luxury-muted/60;
-  transition: color 0.3s ease;
-}
-
-.luxury-input:focus::placeholder {
-  @apply text-luxury-muted/40;
-}
-
-.luxury-input:focus {
-  @apply shadow-glow-sm;
-  transform: translateY(-1px);
+.card-hover {
+  @apply card hover:border-apple-accent/30 hover:shadow-md;
 }
 
 /* ============================================
    BUTTON STYLING
    ============================================ */
-.luxury-button {
-  @apply px-4 py-2 rounded-lg font-medium transition-all duration-300 ease-out;
-  position: relative;
-  overflow: hidden;
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2.5 rounded-md font-medium transition-all duration-200;
 }
 
-.luxury-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  transition: left 0.3s ease;
+.btn-primary {
+  @apply btn bg-apple-accent text-white hover:bg-blue-600 hover:shadow-md active:scale-95;
 }
 
-.luxury-button:hover::before {
-  left: 100%;
+.btn-secondary {
+  @apply btn bg-apple-border text-apple-text hover:bg-apple-secondary/10 hover:shadow-sm active:scale-95;
 }
 
-.luxury-button-primary {
-  @apply luxury-button bg-gradient-to-r from-luxury-accent to-luxury-accent-light text-black font-semibold hover:shadow-glow-lg hover:from-luxury-accent-light hover:to-luxury-accent active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+.btn-tertiary {
+  @apply btn text-apple-accent hover:bg-apple-accent/10 active:scale-95;
 }
 
-.luxury-button-primary:hover {
-  transform: translateY(-2px);
+.btn-danger {
+  @apply btn bg-apple-danger text-white hover:bg-red-600 hover:shadow-md active:scale-95;
 }
 
-.luxury-button-secondary {
-  @apply luxury-button bg-luxury-surface border border-luxury-accent/40 text-luxury-accent hover:bg-luxury-card hover:border-luxury-accent/60 hover:shadow-glow active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+.btn-icon {
+  @apply inline-flex items-center justify-center w-8 h-8 rounded-md text-apple-secondary hover:bg-apple-border hover:text-apple-text transition-colors duration-200;
 }
 
-.luxury-button-secondary:hover {
-  transform: translateY(-2px);
+.btn-icon-sm {
+  @apply inline-flex items-center justify-center w-6 h-6 rounded text-apple-secondary hover:bg-apple-border hover:text-apple-text transition-colors duration-200;
 }
 
-.luxury-button-ghost {
-  @apply luxury-button text-luxury-muted hover:text-luxury-accent hover:bg-luxury-surface/50 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+/* ============================================
+   INPUT STYLING
+   ============================================ */
+.input {
+  @apply w-full px-4 py-2.5 rounded-md border border-apple-border bg-white text-apple-text placeholder-apple-secondary/50 transition-all duration-200;
 }
 
-.luxury-button-ghost:hover {
-  transform: translateY(-1px);
+.input:focus {
+  @apply ring-2 ring-apple-accent/30 ring-offset-1 border-apple-accent/50;
+}
+
+.input-lg {
+  @apply py-3 text-base;
+}
+
+/* ============================================
+   MESSAGE BUBBLES
+   ============================================ */
+.message-bubble {
+  @apply rounded-xl px-4 py-2.5 max-w-xs break-words;
+  animation: slideUp 0.3s ease-out;
+}
+
+.message-sent {
+  @apply bg-apple-accent text-white rounded-tr-none;
+}
+
+.message-received {
+  @apply bg-apple-border/30 text-apple-text rounded-tl-none;
 }
 
 /* ============================================
    BADGE STYLING
    ============================================ */
-.luxury-badge {
-  @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-luxury-accent/20 to-luxury-accent-light/20 text-luxury-accent border border-luxury-accent/40 shadow-glow-sm;
-  backdrop-filter: blur(4px);
-  transition: all 0.3s ease;
+.badge {
+  @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold;
 }
 
-.luxury-badge:hover {
-  @apply border-luxury-accent/60 shadow-glow;
-  transform: scale(1.05);
+.badge-primary {
+  @apply bg-apple-accent/10 text-apple-accent;
+}
+
+.badge-secondary {
+  @apply bg-apple-secondary/10 text-apple-secondary;
+}
+
+.badge-success {
+  @apply bg-apple-success/10 text-apple-success;
+}
+
+.badge-danger {
+  @apply bg-apple-danger/10 text-apple-danger;
 }
 
 /* ============================================
    STATUS INDICATORS
    ============================================ */
+.status-dot {
+  @apply w-3 h-3 rounded-full;
+}
+
 .status-online {
-  @apply bg-emerald-500 shadow-lg shadow-emerald-500/50 animate-pulse;
+  @apply bg-apple-success;
 }
 
 .status-away {
-  @apply bg-amber-400 shadow-lg shadow-amber-400/50;
+  @apply bg-yellow-500;
 }
 
 .status-dnd {
-  @apply bg-rose-500 shadow-lg shadow-rose-500/50;
+  @apply bg-apple-danger;
 }
 
 .status-offline {
-  @apply bg-slate-500/70;
+  @apply bg-apple-secondary/40;
 }
 
 /* ============================================
-   MESSAGE BUBBLE ENHANCEMENTS
+   OVERLAY & MODAL
    ============================================ */
-.message-own {
-  @apply bg-gradient-to-br from-luxury-accent via-luxury-accent-light to-luxury-accent-light text-black shadow-glow rounded-3xl rounded-tr-lg;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(232, 197, 71, 0.3);
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-  position: relative;
-}
-
-.message-own::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 1.5rem;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(232, 197, 71, 0.4), rgba(212, 175, 55, 0.2));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.message-own:hover {
-  @apply shadow-glow-lg;
-  transform: translateY(-2px);
-}
-
-.message-other {
-  @apply bg-luxury-card border border-luxury-accent/25 text-luxury-text shadow-luxury rounded-3xl rounded-tl-lg;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-  position: relative;
-}
-
-.message-other::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 1.5rem;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.message-other:hover {
-  @apply border-luxury-accent/40 shadow-luxury-lg;
-  transform: translateY(-2px);
-}
-
-/* ============================================
-   HOVER EFFECTS FOR INTERACTIVE ELEMENTS
-   ============================================ */
-.interactive-hover {
-  @apply hover:bg-luxury-surface/50 hover:border-luxury-accent/40 transition-all duration-300;
-}
-
-.interactive-hover:hover {
-  transform: translateY(-1px);
-}
-
-/* ============================================
-   MODAL & OVERLAY STYLING
-   ============================================ */
-.modal-backdrop {
-  @apply fixed inset-0 bg-black/70 backdrop-blur-md transition-opacity duration-300;
-  animation: fadeIn 0.3s ease;
+.modal-overlay {
+  @apply fixed inset-0 bg-black/40 backdrop-blur-sm;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .modal-content {
-  @apply bg-luxury-card border border-luxury-accent/40 rounded-2xl shadow-luxury-lg;
-  backdrop-filter: blur(16px);
-  animation: scaleIn 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-}
-
-/* ============================================
-   ENHANCED SIDEBAR STYLING
-   ============================================ */
-.sidebar-header {
-  @apply bg-gradient-to-b from-luxury-surface/80 to-luxury-bg/40;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-}
-
-.conversation-item {
-  @apply transition-all duration-300 ease-out;
-}
-
-.conversation-item:hover {
-  @apply bg-luxury-surface/40;
-  transform: translateX(4px);
-}
-
-.conversation-item.active {
-  @apply bg-gradient-to-r from-luxury-accent border-l-2 border-luxury-accent;
-}
-
-/* ============================================
-   ENHANCED INPUT AREA
-   ============================================ */
-.message-input-container {
-  @apply bg-luxury-surface border-t border-luxury-accent/15 shadow-luxury-lg backdrop-blur-xs;
-  background: linear-gradient(180deg, rgba(26, 26, 26, 0.8) 0%, rgba(15, 15, 15, 0.9) 100%);
-}
-
-.message-textarea {
-  @apply bg-luxury-card border border-luxury-accent/25 text-luxury-text rounded-xl px-4 py-3 focus:ring-2 focus:ring-luxury-accent/50 focus:border-luxury-accent/40 hover:border-luxury-accent/50 resize-none max-h-24 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-sm;
-}
-
-.message-textarea:focus {
-  @apply shadow-glow-sm;
-  transform: translateY(-1px);
-}
-
-/* ============================================
-   RESPONSIVE ADJUSTMENTS
-   ============================================ */
-@media (max-width: 768px) {
-  .luxury-button {
-    @apply px-3 py-2 text-sm;
-  }
-
-  h1 {
-    @apply text-3xl;
-  }
-
-  h2 {
-    @apply text-xl;
-  }
-
-  h3 {
-    @apply text-lg;
-  }
-
-  body {
-    letter-spacing: 0.2px;
-  }
-
-  .message-bubble {
-    animation: messageSlideIn 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-  }
-
-  .message-own,
-  .message-other {
-    @apply rounded-2xl;
-  }
+  @apply bg-white rounded-2xl shadow-xl;
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ============================================
@@ -527,10 +316,14 @@ select {
 }
 
 /* ============================================
-   DARK MODE ENHANCEMENTS
+   RESPONSIVE
    ============================================ */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: linear-gradient(135deg, #0a0a0a 0%, #151515 50%, #0a0a0a 100%);
+@media (max-width: 768px) {
+  .message-bubble {
+    @apply max-w-sm;
+  }
+
+  .btn {
+    @apply px-3 py-2 text-sm;
   }
 }

@@ -182,6 +182,50 @@ public class ChatService {
         memberRepository.save(cm);
     }
 
+    /** Delete a conversation. For DIRECT: remove user's membership. For GROUP: only owner can delete. */
+    public void deleteConversation(Long conversationId, Long userId) {
+        Conversation conv = findConversation(conversationId);
+        User user = findUser(userId);
+
+        if (conv.getType() == ConversationType.DIRECT) {
+            // For direct conversations, just remove the user's membership
+            ConversationMember cm = findMember(conv, userId);
+            cm.setLeftAt(LocalDateTime.now());
+            memberRepository.save(cm);
+            log.info("User {} left direct conversation {}", userId, conversationId);
+        } else {
+            // For group conversations, only owner can delete
+            requireGroupAdminOrOwner(conv, userId);
+            
+            // Delete all pinned messages for this conversation
+            List<PinnedMessage> pinnedMessages = pinnedMessageRepository.findByConversationOrderByPinnedAtDesc(conv);
+            pinnedMessageRepository.deleteAll(pinnedMessages);
+            
+            // Delete all reactions for messages in this conversation
+            List<Message> messages = messageRepository.findByConversationOrderBySentAtDesc(conv, PageRequest.of(0, Integer.MAX_VALUE)).getContent();
+            for (Message msg : messages) {
+                List<MessageReaction> reactions = reactionRepository.findByMessage(msg);
+                reactionRepository.deleteAll(reactions);
+            }
+            
+            // Delete all messages
+            messageRepository.deleteAll(messages);
+            
+            // Delete all members
+            List<ConversationMember> members = memberRepository.findByConversationAndLeftAtIsNull(conv);
+            memberRepository.deleteAll(members);
+            
+            // Delete the conversation itself
+            conversationRepository.delete(conv);
+            
+            log.info("Group conversation {} deleted by user {}", conversationId, userId);
+        }
+
+        // Broadcast deletion to other members
+        broadcastToConversation(conv, "/queue/conversation-deleted",
+                Map.of("conversationId", conversationId, "deletedBy", userId));
+    }
+
     // ═══════════════════════════════════════════════════════════════════════════
     // MESSAGES — SEND
     // ═══════════════════════════════════════════════════════════════════════════

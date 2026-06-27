@@ -291,15 +291,26 @@ export function useMessages(conversationId) {
 
   const toggleReaction = async (messageId, emoji) => {
     try {
+      console.log('😊 [REACTION] Adding reaction:', { messageId, emoji });
+      
+      // Prevent reactions on temporary messages
+      if (messageId && String(messageId).startsWith('temp-')) {
+        console.warn('⚠️ [REACTION] Cannot add reaction to unsent message:', messageId);
+        setError('Cannot add reaction to unsent messages');
+        return;
+      }
+      
       const { data } = await axiosInstance.post(
         `/api/chat/messages/${messageId}/reactions`,
         { emoji }
       );
+      console.log('✅ [REACTION] Reaction added successfully:', data);
       updateMessage(conversationId, messageId, { reactions: data.reactions });
       setError(null);
     } catch (error) {
-      console.error('Failed to toggle reaction:', error);
-      setError('Failed to toggle reaction');
+      console.error('❌ [REACTION] Failed to toggle reaction:', error);
+      console.error('❌ [REACTION] Error response:', error.response?.data);
+      setError('Failed to add reaction: ' + (error.response?.data?.message || error.message));
     }
   };
 

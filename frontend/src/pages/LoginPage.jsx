@@ -5,11 +5,7 @@ import { useAuth } from '../context/AuthContext';
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,7 +13,6 @@ export default function LoginPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error for this field
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -30,7 +25,6 @@ export default function LoginPage() {
     setLoading(true);
 
     const result = await login(formData.username, formData.password);
-
     if (result.success) {
       navigate('/chat');
     } else {
@@ -39,79 +33,76 @@ export default function LoginPage() {
         setErrors(result.details);
       }
     }
-
     setLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-apple-bg px-4">
       <div className="w-full max-w-md">
-        <div className="bg-slate-800 border border-slate-700 rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-white mb-2 text-center">Sign In</h1>
-          <p className="text-slate-400 text-center mb-8">Welcome back to Chat App</p>
+        <div className="bg-white border border-apple-border rounded-lg shadow-lg p-8 slide-up">
+          <h1 className="text-h2 text-apple-text mb-2 text-center">Sign In</h1>
+          <p className="text-apple-secondary text-center mb-8">Welcome back to Chat</p>
 
           {serverError && (
-            <div className="bg-red-900/20 border border-red-700 text-red-400 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-apple-danger/10 border border-apple-danger/30 text-apple-danger px-4 py-3 rounded-md mb-6">
               {serverError}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-slate-300 mb-2">
-                Username
-              </label>
+              <label htmlFor="username" className="block text-sm font-medium text-apple-text mb-2">Username</label>
               <input
                 id="username"
                 name="username"
                 type="text"
                 value={formData.username}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 bg-slate-700 border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                  errors.username ? 'border-red-500' : 'border-slate-600'
-                }`}
+                className={`w-full input ${errors.username ? 'border-apple-danger' : ''}`}
                 placeholder="Enter your username"
               />
-              {errors.username && (
-                <p className="text-red-400 text-sm mt-1">{errors.username}</p>
-              )}
+              {errors.username && <p className="text-apple-danger text-sm mt-1">{errors.username}</p>}
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
-                Password
-              </label>
+              <label htmlFor="password" className="block text-sm font-medium text-apple-text mb-2">Password</label>
               <input
                 id="password"
                 name="password"
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 bg-slate-700 border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                  errors.password ? 'border-red-500' : 'border-slate-600'
-                }`}
+                className={`w-full input ${errors.password ? 'border-apple-danger' : ''}`}
                 placeholder="Enter your password"
               />
-              {errors.password && (
-                <p className="text-red-400 text-sm mt-1">{errors.password}</p>
-              )}
+              {errors.password && <p className="text-apple-danger text-sm mt-1">{errors.password}</p>}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-800 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg transition-colors mt-6"
+              className="w-full btn btn-primary py-3 font-semibold"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Signing in...
+                </span>
+              ) : (
+                'Sign In'
+              )}
             </button>
           </form>
 
-          <p className="text-slate-400 text-center mt-6">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-medium">
-              Register
-            </Link>
-          </p>
+          <div className="mt-6 text-center">
+            <p className="text-apple-secondary">Don't have an account?{' '}
+              <Link to="/register" className="text-apple-accent hover:font-semibold transition-all">
+                Create one
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

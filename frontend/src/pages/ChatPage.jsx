@@ -162,20 +162,20 @@ export default function ChatPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-luxury-bg">
+      <div className="flex items-center justify-center h-screen bg-apple-bg">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-luxury-accent mx-auto mb-4"></div>
-          <p className="text-luxury-muted">Loading conversations...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-apple-accent mx-auto mb-4"></div>
+          <p className="text-apple-secondary">Loading conversations...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-luxury-bg">
+    <div className="flex h-screen bg-apple-bg">
       {/* Connection Status Indicator */}
       {!isConnected && (
-        <div className="fixed top-0 left-0 right-0 bg-amber-600 text-white text-sm py-2 px-4 text-center z-50 font-medium">
+        <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-white text-sm py-2 px-4 text-center z-50 font-medium">
           Connecting to server...
         </div>
       )}

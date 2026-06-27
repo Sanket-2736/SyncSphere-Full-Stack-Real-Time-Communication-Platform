@@ -11,3 +11,5 @@ public class BackendApplication {
 	}
 
 }
+
+// run using : ./mvnw spring-boot:run

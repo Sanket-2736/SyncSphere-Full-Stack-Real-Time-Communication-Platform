@@ -182,6 +182,19 @@ public class ChatController {
         return ResponseEntity.noContent().build();
     }
 
+    /** DELETE /api/chat/conversations/{id} — delete conversation */
+    @DeleteMapping("/api/chat/conversations/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @ResponseBody
+    public ResponseEntity<Void> deleteConversation(
+            @PathVariable Long id, Principal principal) {
+        System.out.println("🔵 [DELETE_CONVERSATION] Deleting conversation " + id);
+        User user = extractUser(principal);
+        chatService.deleteConversation(id, user.getId());
+        System.out.println("✅ [DELETE_CONVERSATION] Conversation deleted: " + id);
+        return ResponseEntity.noContent().build();
+    }
+
     // ═══════════════════════════════════════════════════════════════════════════
     // REST — messages
     // ═══════════════════════════════════════════════════════════════════════════

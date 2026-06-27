@@ -111,9 +111,9 @@ export default function ConversationPanel({
 
   if (!conversationId) {
     return (
-      <div className="flex-1 bg-luxury-bg flex flex-col items-center justify-center">
+      <div className="flex-1 bg-white flex flex-col items-center justify-center">
         <svg
-          className="w-16 h-16 mb-4 opacity-30 text-luxury-muted"
+          className="w-16 h-16 mb-4 opacity-30 text-apple-secondary"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -125,13 +125,13 @@ export default function ConversationPanel({
             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
           />
         </svg>
-        <p className="text-luxury-muted">Select a conversation to start messaging</p>
+        <p className="text-apple-secondary">Select a conversation to start messaging</p>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 bg-luxury-bg flex flex-col">
+    <div className="flex-1 bg-white flex flex-col">
       {/* Pinned Messages Banner */}
       <PinnedMessagesBanner
         pinnedMessages={pinnedMessages}
@@ -139,8 +139,8 @@ export default function ConversationPanel({
       />
 
       {/* Header */}
-      <div className="h-16 bg-luxury-surface border-b border-luxury-accent/10 flex items-center justify-between px-6 shadow-luxury">
-        <h2 className="text-lg font-serif font-semibold text-luxury-text">
+      <div className="h-16 bg-white border-b border-apple-accent/10 flex items-center justify-between px-6 shadow-lg">
+        <h2 className="text-lg font-sans font-semibold text-apple-text">
           {conversationName || `Conversation ${conversationId}`}
         </h2>
         <div className="flex items-center gap-1">
@@ -157,7 +157,7 @@ export default function ConversationPanel({
                 startAudioCall(targetUserId, conversationName);
               }}
               disabled={!user || (!user.id && !user.userId)}
-              className="p-2.5 text-luxury-muted hover:text-luxury-accent hover:bg-luxury-card rounded-lg transition-all hover:shadow-glow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-2.5 text-apple-secondary hover:text-apple-accent hover:bg-apple-card rounded-lg transition-all hover:shadow-md-sm disabled:opacity-50 disabled:cursor-not-allowed"
               title="Audio call"
             >
               <svg
@@ -183,7 +183,7 @@ export default function ConversationPanel({
                 startVideoCall(targetUserId, conversationName);
               }}
               disabled={!user || (!user.id && !user.userId)}
-              className="p-2.5 text-luxury-muted hover:text-luxury-accent hover:bg-luxury-card rounded-lg transition-all hover:shadow-glow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-2.5 text-apple-secondary hover:text-apple-accent hover:bg-apple-card rounded-lg transition-all hover:shadow-md-sm disabled:opacity-50 disabled:cursor-not-allowed"
               title="Video call"
             >
               <svg
@@ -197,7 +197,7 @@ export default function ConversationPanel({
           ) : null}
 
           {/* Search Button */}
-          <button className="p-2.5 text-luxury-muted hover:text-luxury-accent transition-all hover:bg-luxury-card rounded-lg hover:shadow-glow-sm">
+          <button className="p-2.5 text-apple-secondary hover:text-apple-accent transition-all hover:bg-apple-card rounded-lg hover:shadow-md-sm">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -214,7 +214,7 @@ export default function ConversationPanel({
           </button>
 
           {/* Info Button */}
-          <button className="p-2.5 text-luxury-muted hover:text-luxury-accent transition-all hover:bg-luxury-card rounded-lg hover:shadow-glow-sm">
+          <button className="p-2.5 text-apple-secondary hover:text-apple-accent transition-all hover:bg-apple-card rounded-lg hover:shadow-md-sm">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -236,17 +236,17 @@ export default function ConversationPanel({
       <div
         ref={messagesContainerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-luxury-bg/50 to-luxury-bg"
+        className="flex-1 overflow-y-auto p-6 space-y-4 bg-white"
       >
         {loading && messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-luxury-accent mx-auto mb-2"></div>
-              <p className="text-luxury-muted text-sm">Loading messages...</p>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-apple-accent mx-auto mb-2"></div>
+              <p className="text-apple-secondary text-sm">Loading messages...</p>
             </div>
           </div>
         ) : messages.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-luxury-muted">
+          <div className="flex items-center justify-center h-full text-apple-secondary">
             <p className="text-center">No messages yet. Start the conversation!</p>
           </div>
         ) : (
@@ -256,7 +256,7 @@ export default function ConversationPanel({
               <button
                 onClick={loadOlderMessages}
                 disabled={loading}
-                className="w-full py-2 text-sm text-luxury-muted hover:text-luxury-accent disabled:opacity-50 transition-colors font-medium"
+                className="w-full py-2 text-sm text-apple-secondary hover:text-apple-accent disabled:opacity-50 transition-colors font-medium"
               >
                 {loading ? 'Loading...' : 'Load older messages'}
               </button>
@@ -283,19 +283,19 @@ export default function ConversationPanel({
             {/* Typing Indicator */}
             {typingUsers.length > 0 && (
               <div className="flex gap-3 mb-4 animate-fade-in">
-                <div className="flex items-center gap-2 px-4 py-2 bg-luxury-card rounded-lg border border-luxury-accent/20 shadow-glow-sm">
+                <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg border border-apple-accent/20 shadow-md-sm">
                   <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-luxury-accent rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-apple-accent rounded-full animate-bounce"></div>
                     <div
-                      className="w-2 h-2 bg-luxury-accent rounded-full animate-bounce"
+                      className="w-2 h-2 bg-apple-accent rounded-full animate-bounce"
                       style={{ animationDelay: '0.1s' }}
                     ></div>
                     <div
-                      className="w-2 h-2 bg-luxury-accent rounded-full animate-bounce"
+                      className="w-2 h-2 bg-apple-accent rounded-full animate-bounce"
                       style={{ animationDelay: '0.2s' }}
                     ></div>
                   </div>
-                  <span className="text-xs text-luxury-muted ml-2 font-medium">
+                  <span className="text-xs text-apple-secondary ml-2 font-medium">
                     {typingUsers.length === 1
                       ? `${typingUsers[0]?.firstName || 'Someone'} is typing...`
                       : `${typingUsers.length} people are typing...`}
